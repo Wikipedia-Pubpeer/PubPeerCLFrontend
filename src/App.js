@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import ApiKeyPrompt from "./components/ApiKeyPrompt";
+import CommentPage from "./components/CommentPage";
 
 function App() {
+  const [auth, setAuth] = useState({ key: "", nickname: "" });
+
+  const handleLogin = (key, nickname) => {
+    setAuth({ key, nickname });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!auth.key ? (
+        <ApiKeyPrompt onLogin={handleLogin} />
+      ) : (
+        <CommentPage apiKey={auth.key} userNickname={auth.nickname} />
+      )}
     </div>
   );
 }

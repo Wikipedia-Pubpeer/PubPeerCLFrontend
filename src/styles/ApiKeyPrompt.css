@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+.apikey-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: #fdfeff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow: hidden;
+}
+
+/* --- BLOBS CHE VIAGGIANO --- */
+.blob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(80px); /* Ridotto un filo il blur per definirli meglio */
+  z-index: 0;
+  opacity: 0.6;
+  will-change: transform;
+}
+
+/* OGNI BLOB HA LA SUA ANIMAZIONE SPECIFICA 
+   COSI' NON SEMBRANO SINCRONIZZATI 
+*/
+
+.b-light-1 { 
+  top: -10%; 
+  left: -10%; 
+  background: #818cf8; 
+  /* Si muove in diagonale ampia */
+  animation: travel-1 25s infinite alternate ease-in-out;
+}
+
+.b-light-2 { 
+  bottom: -10%; 
+  right: -10%; 
+  background: #34d399; 
+  /* Si muove in verticale/orizzontale opposto */
+  animation: travel-2 30s infinite alternate ease-in-out;
+}
+
+.b-light-3 { 
+  top: 30%; 
+  left: 30%; 
+  background: #fb923c; 
+  width: 500px; 
+  height: 500px;
+  /* Gira attorno al centro */
+  animation: travel-3 35s infinite alternate ease-in-out;
+}
+
+/* --- LE ROTTE DEI BLOB (MOVIMENTI AMPI) --- */
+
+@keyframes travel-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(50vw, 10vh) scale(1.1); } /* Va a destra */
+  66%  { transform: translate(20vw, 60vh) scale(0.9); } /* Scende in basso */
+  100% { transform: translate(80vw, -10vh) scale(1.2); } /* Va lontano a destra */
+}
+
+@keyframes travel-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-40vw, -20vh) scale(1.1); } /* Sale a sinistra */
+  66%  { transform: translate(-10vw, -70vh) scale(0.9); } /* Sale in alto */
+  100% { transform: translate(-60vw, 10vh) scale(1); } /* Va lontano a sinistra */
+}
+
+@keyframes travel-3 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(30vw, -30vh); } /* Alto destra */
+  66%  { transform: translate(-30vw, 20vh); } /* Basso sinistra */
+  100% { transform: translate(20vw, 40vh); } /* Basso destra */
+}
+
+
+/* --- CARD GLASS (MANTENUTA INTATTA) --- */
+.apikey-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(158, 203, 248, 0.235); 
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 50px 40px;
+  border-radius: 32px;
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+  
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.05),
+    0 25px 50px -12px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: cardEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.apikey-card:hover {
+  transform: translateY(-15px) scale(1.03);
+  background: rgba(158, 203, 248, 0.28);
+  box-shadow: 
+    0 30px 40px -5px rgba(0, 0, 0, 0.08),
+    0 50px 70px -20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes cardEntrance {
+  from { opacity: 0; transform: translateY(60px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- LOGO PPC --- */
+.logo-badge-soft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  color: white;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.apikey-card:hover .logo-badge-soft {
+  transform: rotate(-15deg) scale(1.1);
+}
+
+/* --- TEXT & INPUT --- */
+.apikey-card h2 { color: #0f172a; font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+.apikey-card p { color: #475569; font-size: 0.95rem; margin-bottom: 35px; }
+
+.apikey-input {
+  width: 100%;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  color: #1e293b;
+  font-size: 1rem;
+  margin-bottom: 18px;
+  transition: all 0.4s ease;
+  box-sizing: border-box;
+}
+
+.apikey-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.apikey-button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: #0f172a;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.4s ease;
+}
+
+.apikey-button:hover { background: #000; transform: scale(1.02); }
+
+/* --- ERROR --- */
+.apikey-error {
+  margin-top: 20px;
+  color: #e11d48;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px;
+  background: #fff1f2;
+  border-radius: 12px;
+  border: 1px solid #ffe4e6;
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}

@@ -1,0 +1,169 @@
+/* --- NAVBAR BASE --- */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 70px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 40px; z-index: 2000;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.navbar-logo {
+  font-size: 1.2rem; font-weight: 800; color: #0f172a;
+  text-decoration: none; letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #0f172a 0%, #818cf8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* --- LINKS --- */
+.navbar-links { display: flex; align-items: center; gap: 30px; }
+
+.navbar-links a {
+  text-decoration: none; color: #64748b; font-size: 0.9rem; font-weight: 600;
+  transition: all 0.3s ease; position: relative;
+}
+.navbar-links a:hover { color: #0f172a; }
+.navbar-links a::after {
+  content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+  background: #818cf8; transition: width 0.3s ease;
+}
+.navbar-links a:hover::after { width: 100%; }
+
+/* --- USER & DROPDOWN (HOVER EFFECT) --- */
+.user-dropdown-container {
+  position: relative;
+  height: 100%;
+  display: flex; align-items: center;
+  /* Importante: questo permette all'hover di funzionare senza intoppi */
+  cursor: pointer;
+}
+
+.navbar-user {
+  background: #0f172a; color: white;
+  padding: 8px 18px; border-radius: 50px;
+  font-size: 0.85rem; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+/* Il menu a tendina */
+.user-dropdown-menu {
+  position: absolute;
+  top: 100%; /* Si attacca sotto */
+  right: 0;
+  width: 150px;
+  
+  /* Trucco: Padding trasparente sopra per non perdere l'hover muovendo il mouse */
+  padding-top: 15px; 
+  
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 2001;
+}
+
+/* Il contenuto reale del menu (per poter dare lo sfondo bianco) */
+.user-dropdown-menu .logout-btn {
+  width: 100%;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover { background: #fff1f2; }
+
+/* REGOLE HOVER: Quando passi sopra il container, mostra il menu */
+.user-dropdown-container:hover .user-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.user-dropdown-container:hover .navbar-user {
+  transform: translateY(-1px);
+  background: #1e293b;
+}
+
+/* --- MODALE POPUP (Overlay & Card) --- */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  display: flex; justify-content: center; align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-card {
+  background: white;
+  padding: 30px;
+  border-radius: 24px;
+  width: 90%; max-width: 400px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: scaleIn 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.modal-card h3 { margin: 0 0 10px; color: #0f172a; font-size: 1.3rem; }
+.modal-card p { color: #64748b; margin-bottom: 25px; font-size: 0.95rem; }
+
+.modal-actions { display: flex; gap: 12px; justify-content: center; }
+
+.btn-cancel, .btn-confirm {
+  padding: 12px 24px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; transition: transform 0.2s;
+}
+.btn-cancel { background: #f1f5f9; color: #475569; }
+.btn-cancel:hover { background: #e2e8f0; }
+
+.btn-confirm { background: #ef4444; color: white; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2); }
+.btn-confirm:hover { transform: scale(1.05); background: #dc2626; }
+
+/* Animazioni */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* --- MOBILE --- */
+.navbar-hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.bar { width: 25px; height: 3px; background: #0f172a; border-radius: 5px; transition: 0.3s; }
+
+@media (max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-hamburger { display: flex; }
+
+  .navbar-links {
+    position: absolute; top: 70px; left: 0; width: 100%; height: 0;
+    overflow: hidden; flex-direction: column;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    gap: 0; padding: 0;
+  }
+  .navbar-links.active { height: calc(100vh - 70px); padding: 30px 0; }
+  .navbar-links a { font-size: 1.1rem; padding: 15px; width: 100%; text-align: center; }
+
+  /* Mobile: Il menu non è hover, ma fisso sotto l'utente */
+  .user-dropdown-container { flex-direction: column; width: 100%; margin-top: 20px; gap: 15px; }
+  .user-dropdown-menu {
+    position: static; opacity: 1; visibility: visible; transform: none; padding: 0; width: auto;
+  }
+  .user-dropdown-menu .logout-btn { background: transparent; border: 1px solid #fee2e2; justify-content: center; box-shadow: none; }
+  
+  .navbar-hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .navbar-hamburger.active .bar:nth-child(2) { opacity: 0; }
+  .navbar-hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+}

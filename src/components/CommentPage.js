@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/CommentPage.css";
+import DOMPurify from "dompurify";
 
 export default function CommentPage({ apiKey, userNickname }) {
     const [comment, setComment] = useState(null);
@@ -113,9 +114,14 @@ export default function CommentPage({ apiKey, userNickname }) {
                             <h2>Classifica il contenuto</h2>
                         </div>
 
-                        <div className={`comment-content-box ${comment.is_from_author ? 'author-style' : ''}`}>
-                            <p>{comment.comment_content}</p>
-                        </div>
+                        <div
+                            className={`comment-content-box ${comment.is_from_author ? 'author-style' : ''}`}
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(comment.comment_content, {
+                                    ADD_ATTR: ['target'] // Permette l'attributo target se presente
+                                })
+                            }}
+                        />
 
                         <div className="classification-area">
                             <label>Scegli la categoria più appropriata:</label>

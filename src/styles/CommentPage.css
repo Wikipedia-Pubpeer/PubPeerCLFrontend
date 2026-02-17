@@ -378,3 +378,21 @@
     font-size: 1.2rem;
   }
 }
+
+.comment-content-box a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+
+.comment-content-box code {
+    background: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.comment-content-box img {
+    max-width: 100%; /* Evita che immagini grandi escano dalla card */
+    height: auto;
+}
